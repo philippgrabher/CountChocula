@@ -6,15 +6,24 @@
       "type": "string",
       "defaultValue": "CountChoculadnsnameupdateme",
       "minLength": 1
+    },
+    "CountChoculaAdminUserName": {
+      "type": "string",
+      "defaultValue": "CountChoculaAdminUserName",
+      "minLength": 3
+    },
+    "CountChoculaAdminPassword": {
+      "type": "string",
+      "defaultValue": "CountChoculaAdminPassword",
+      "minLength": 8
     }
+
   },
   "variables": {
     "CountChoculaVNETPrefix": "192.168.0.0/24",
     "CountChoculaVNETSubnet1Name": "CountChocula",
     "CountChoculaVNETSubnet1Prefix": "192.168.0.0/24",
     "CountChoculaName": "CountChocula",
-    "CountChoculaAdminUserName": "stormtrooperio",
-    "CountChoculaAdminPassword": "Password.1!!",
     "CountChoculaImagePublisher": "MicrosoftWindowsServer",
     "CountChoculaImageOffer": "WindowsServer",
     "CountChoculaWindowsOSVersion": "2016-Datacenter",
