@@ -13,7 +13,7 @@ Use to provison VMs in Azure Instance.
 * Git
 * Google Chrome
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdmladblum%2Fcountchocula%2Fmaster%2Fazure-deploy-basic.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmladblum%2Fcountchocula%2Fmaster%2Fazure-deploy-basic.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -26,7 +26,7 @@ Use to provison VMs in Azure Instance.
 * Git
 * Google Chrome
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdmladblum%2Fcountchocula%2Fmaster%2Fazure-deploy-rstudio.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmladblum%2Fcountchocula%2Fmaster%2Fazure-deploy-rstudio.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -35,7 +35,7 @@ Use to provison VMs in Azure Instance.
 **This deployment will provision an isolated VM with the following software:**
 * Something special
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdmladblum%2Fcountchocula%2Fmaster%2Fazure-deploy-special.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmladblum%2Fcountchocula%2Fmaster%2Fazure-deploy-special.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
