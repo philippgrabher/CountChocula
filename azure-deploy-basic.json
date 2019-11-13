@@ -4,18 +4,18 @@
   "parameters": {
     "CountChoculaDnsName": {
       "type": "string",
-      "defaultValue": "CountChoculadnsnameupdateme",
+      "defaultValue": "dnsName",
       "minLength": 1
     },
     "CountChoculaAdminUserName": {
       "type": "string",
-      "defaultValue": "CountChoculaAdminUserName",
+      "defaultValue": "AdminUserName",
       "minLength": 3
     },
     "CountChoculaAdminPassword": {
       "type": "string",
-      "defaultValue": "CountChoculaAdminPassword",
-      "minLength": 8
+      "defaultValue": "abc",
+      "minLength": 12
     }
 
   },
@@ -25,8 +25,8 @@
     "CountChoculaVNETSubnet1Prefix": "192.168.0.0/24",
     "CountChoculaName": "CountChocula",
     "CountChoculaImagePublisher": "MicrosoftWindowsServer",
-    "CountChoculaImageOffer": "WindowsServer",
-    "CountChoculaWindowsOSVersion": "2016-Datacenter",
+    "CountChoculaImageOffer": "Windows-10",
+    "CountChoculaWindowsOSVersion": "rs5-pro",
     "CountChoculaOSDiskName": "[concat(variables('CountChoculaName'), '-OSDISK')]",
     "CountChoculaVmSize": "Standard_D2s_v3",
     "CountChoculaVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'CountChoculaVNET')]",
@@ -34,8 +34,8 @@
     "CountChoculaNicName": "[concat(variables('CountChoculaName'), '-NIC')]",
     "CountChocula-PUBIPName": "[concat(variables('CountChoculaName'), '-PIP')]",
     "CountChoculaInstallHyperVScriptFolder": ".",
-    "CountChoculaInstallHyperVScriptFileName": "InstallCountChocula.ps1",
-    "CountChoculaInstallHyperVURL": "https://raw.githubusercontent.com/deltadan/CountChocula/master/InstallCountChocula.ps1"
+    "CountChoculaInstallHyperVScriptFileName": "InstallSoftwareBasic.ps1",
+    "CountChoculaInstallHyperVURL": "https://raw.githubusercontent.com/mladblum/CountChocula/master/InstallSoftwareBasic.ps1"
   },
   "resources": [
     {
@@ -126,7 +126,11 @@
         "osProfile": {
           "computerName": "[variables('CountChoculaName')]",
           "adminUsername": "[variables('CountChoculaAdminUsername')]",
-          "adminPassword": "[variables('CountChoculaAdminPassword')]"
+          "adminPassword": "[variables('CountChoculaAdminPassword')]",
+          "windowsConfiguration": {
+            "enableAutomaticUpdates": true,
+            "provisionVmAgent": true
+          }
         },
         "storageProfile": {
           "imageReference": {
@@ -137,8 +141,11 @@
           },
           "osDisk": {
             "createOption": "FromImage",
-            "diskSizeGB": 1023
-          }
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            }
+          },
+          "licenseType": "Windows_Client"
         },
         "networkProfile": {
           "networkInterfaces": [
