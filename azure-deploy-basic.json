@@ -24,7 +24,7 @@
     "CountChoculaVNETSubnet1Name": "CountChocula",
     "CountChoculaVNETSubnet1Prefix": "192.168.0.0/24",
     "CountChoculaName": "CountChocula",
-    "CountChoculaImagePublisher": "MicrosoftWindowsServer",
+    "CountChoculaImagePublisher": "MicrosoftWindowsDesktop",
     "CountChoculaImageOffer": "Windows-10",
     "CountChoculaWindowsOSVersion": "rs5-pro",
     "CountChoculaOSDiskName": "[concat(variables('CountChoculaName'), '-OSDISK')]",
