@@ -125,8 +125,8 @@
         },
         "osProfile": {
           "computerName": "[variables('CountChoculaName')]",
-          "adminUsername": "[variables('CountChoculaAdminUsername')]",
-          "adminPassword": "[variables('CountChoculaAdminPassword')]",
+          "adminUsername": "[parameters('CountChoculaAdminUsername')]",
+          "adminPassword": "[parameters('CountChoculaAdminPassword')]",
           "windowsConfiguration": {
             "enableAutomaticUpdates": true,
             "provisionVmAgent": true
