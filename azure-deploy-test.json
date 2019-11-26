@@ -29,7 +29,7 @@
 		"addressPrefix": "10.0.0.0/16",
 		"subnetName": "default",
 		"subnetPrefix": "10.0.0.0/24",
-		"vmName": "[parameters('Hostname')]",
+		"vmName": "testclient",
 		"virtualNetworkName": "Bastion_vNetwork",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
 		"networkSecurityGroupName": "[concat(parameters('Hostname'), '-NSG')]",
