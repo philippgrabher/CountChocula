@@ -20,8 +20,8 @@
 
   },
   "variables": {
-	"vName": "[parameters('Hostname')]"
-	"vVNETname": "Bastion_vNetwork",
+    "vName": "[parameters('Hostname')]",
+    "vVNETname": "Bastion_vNetwork",
     "vVNETPrefix": "10.1.0.0/16",
     "vVNETSubnet1Name": "default",
     "vVNETSubnet1Prefix": "10.1.0.0/24",
