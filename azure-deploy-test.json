@@ -131,10 +131,4 @@
       }
     }
   ],
-  "outputs": {
-    "hostname": {
-      "type": "string",
-      "value": "[variables('vmName')]"
-    }
-  }
-}
+ "outputs": {}
