@@ -44,9 +44,7 @@
 			"location": "[resourceGroup().location]",
 			"apiVersion": "2016-03-30",
 			"dependsOn": [],
-			"tags": {
-				"displayName": "[variables('vVNETname')]"
-			},
+			
 			"properties": {
 				"addressSpace": {
 					"addressPrefixes": [
@@ -71,9 +69,7 @@
 				"[resourceId('Microsoft.Network/virtualNetworks', 'vVNET')]"
 
 			],
-			"tags": {
-				"displayName": "Test Tag"
-			},
+			
 			"properties": {
 				"ipConfigurations": [{
 					"name": "ipconfig1",
