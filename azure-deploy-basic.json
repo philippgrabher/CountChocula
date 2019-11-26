@@ -9,7 +9,7 @@
 		},
 		"AdminUserName": {
 			"type": "string",
-			"defaultValue": "admin",
+			"defaultValue": "testadmin",
 			"minLength": 5
 		},
 		"AdminPassword": {
