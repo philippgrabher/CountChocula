@@ -2,17 +2,17 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "CountChoculaDnsName": {
+    "DnsName": {
       "type": "string",
       "defaultValue": "dnsName",
       "minLength": 1
     },
-    "CountChoculaAdminUserName": {
+    "AdminUserName": {
       "type": "string",
-      "defaultValue": "AdminUserName",
+      "defaultValue": "Sepp",
       "minLength": 3
     },
-    "CountChoculaAdminPassword": {
+    "AdminPassword": {
       "type": "string",
       "defaultValue": "abc",
       "minLength": 12
@@ -20,32 +20,32 @@
 
   },
   "variables": {
-    "CountChoculaVNETPrefix": "192.168.0.0/24",
-    "CountChoculaVNETSubnet1Name": "CountChocula",
-    "CountChoculaVNETSubnet1Prefix": "192.168.0.0/24",
-    "CountChoculaName": "CountChocula",
+    "CountChoculaVNETPrefix": "10.1.0.0/16",
+    "CountChoculaVNETSubnet1Name": "default",
+    "CountChoculaVNETSubnet1Prefix": "10.1.0.0/24",
+    "CountChoculaName": "TestName1",
     "CountChoculaImagePublisher": "MicrosoftWindowsDesktop",
     "CountChoculaImageOffer": "Windows-10",
     "CountChoculaWindowsOSVersion": "rs5-pro",
     "CountChoculaOSDiskName": "[concat(variables('CountChoculaName'), '-OSDISK')]",
     "CountChoculaVmSize": "Standard_D2s_v3",
-    "CountChoculaVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'CountChoculaVNET')]",
+    "CountChoculaVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'TestBastionVNET')]",
     "CountChoculaSubnetRef": "[concat(variables('CountChoculaVnetID'), '/subnets/', variables('CountChoculaVNETSubnet1Name'))]",
     "CountChoculaNicName": "[concat(variables('CountChoculaName'), '-NIC')]",
     "CountChocula-PUBIPName": "[concat(variables('CountChoculaName'), '-PIP')]",
     "CountChoculaInstallHyperVScriptFolder": ".",
     "CountChoculaInstallHyperVScriptFileName": "InstallSoftwareBasic.ps1",
-    "CountChoculaInstallHyperVURL": "https://raw.githubusercontent.com/mladblum/CountChocula/master/InstallSoftwareBasic.ps1"
+    "CountChoculaInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1"
   },
   "resources": [
     {
-      "name": "CountChoculaVNET",
+      "name": "Bastion_vNetwork",
       "type": "Microsoft.Network/virtualNetworks",
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [],
       "tags": {
-        "displayName": "CountChoculaVNET"
+        "displayName": "Bastion_vNetwork"
       },
       "properties": {
         "addressSpace": {
@@ -109,7 +109,7 @@
       }
     },
     {
-      "name": "[variables('CountChoculaName')]",
+      "name": "[parameters('CountChoculaName')]",
       "type": "Microsoft.Compute/virtualMachines",
       "location": "[resourceGroup().location]",
       "apiVersion": "2017-12-01",
@@ -117,16 +117,16 @@
         "[resourceId('Microsoft.Network/networkInterfaces', variables('CountChoculaNicName'))]"
       ],
       "tags": {
-        "displayName": "CountChocula"
+        "displayName": "BastionHost_Tag"
       },
       "properties": {
         "hardwareProfile": {
           "vmSize": "[variables('CountChoculaVmSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('CountChoculaName')]",
-          "adminUsername": "[parameters('CountChoculaAdminUsername')]",
-          "adminPassword": "[parameters('CountChoculaAdminPassword')]",
+          "computerName": "[parameters('DnsName')]",
+          "adminUsername": "[parameters('AdminUsername')]",
+          "adminPassword": "[parameters('AdminPassword')]",
           "windowsConfiguration": {
             "enableAutomaticUpdates": true,
             "provisionVmAgent": true
