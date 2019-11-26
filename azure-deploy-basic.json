@@ -10,7 +10,7 @@
 		"AdminUserName": {
 			"type": "string",
 			"defaultValue": "admin",
-			"minLength": 8
+			"minLength": 5
 		},
 		"AdminPassword": {
 			"type": "string",
