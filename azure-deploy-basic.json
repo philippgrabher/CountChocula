@@ -28,7 +28,7 @@
 		"vImagePublisher": "MicrosoftWindowsDesktop",
 		"vImageOffer": "Windows-10",
 		"vWindowsOSVersion": "rs5-pro",
-		"vOSDiskName": "[concat(variables('CountChoculaName'), '-OSDISK')]",
+		"vOSDiskName": "[concat(variables('vName'), '-OSDISK')]",
 		"vVmSize": "Standard_D2s_v2",
 		"vVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vVNETname'))]",
 		"vSubnetRef": "[concat(variables('vVnetID'), '/subnets/', variables('vVNETSubnet1Name'))]",
