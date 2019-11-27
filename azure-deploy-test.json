@@ -13,7 +13,7 @@
       "minLength": 8
     },
     "Password": {
-      "type": "securestring",
+      "type": "string",
       "defaultValue": "Password1234",
       "minLength": 8
     }
@@ -56,6 +56,9 @@
             "properties": {
               "addressPrefix": "[variables('vVNETSubnet1Prefix')]"
             }
+          },
+        {
+            "name": "['AzureBastionSubnet']"
           }
         ]
       }
