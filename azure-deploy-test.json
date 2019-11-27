@@ -35,7 +35,9 @@
     "vPUBIPName": "[concat(variables('vName'), '-PIP')]",
     "vInstallHyperVScriptFolder": ".",
     "vHyperVScriptFileName": "InstallSoftwareBasic.ps1",
-    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1"
+    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1",
+    "vBastionSubnetName": "AzureBastionSubnet",
+    "vBastionSubnetPrefix": "10.1.99.0/24"
   },
   "resources": [
     {
@@ -58,9 +60,9 @@
             }
           },
           {
-            "name": "['AzureBastionSubnet']",
+            "name": "[variables('vBastionSubnetName')]",
             "properties": {
-              "addressPrefix": "['10.1.99.0/24']"
+              "addressPrefix": "[variables('vBastionSubnetPrefix')]"
             }
           }
         ]
