@@ -13,4 +13,4 @@ ForEach ($PackageName in $Packages)
 {choco install $PackageName -y}
 
 #Reboot
-Restart-Computer
+#Restart-Computer
