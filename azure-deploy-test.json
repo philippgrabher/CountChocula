@@ -4,7 +4,7 @@
   "parameters": {
     "Hostname": {
       "type": "string",
-      "defaultValue": "hostname",
+      "defaultValue": "client00",
       "minLength": 5
     },
     "UserName": {
