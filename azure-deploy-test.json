@@ -20,10 +20,10 @@
   },
   "variables": {
     "vName": "[parameters('Hostname')]",
-    "vVNETname": "Test_vNetwork",
+    "vVNETname": "Bastion_vNetwork",
     "vVNETPrefix": "10.1.0.0/16",
     "vVNETSubnet1Name": "Subnet1",
-    "vVNETSubnet1Prefix": "10.1.0.0/24",
+    "vVNETSubnet1Prefix": "10.1.1.0/24",
     "vImagePublisher": "MicrosoftWindowsDesktop",
     "vImageOffer": "Windows-10",
     "vWindowsOSVersion": "rs5-pro",
