@@ -1,128 +1,154 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"Hostname": {
-			"type": "string",
-			"metadata": {
-				"description": "Hostname of the Virtual Machine."
-			}
-		},
-		"adminUsername": {
-			"type": "string",
-			"metadata": {
-				"description": "Username for the Virtual Machine."
-			}
-		},
-		"adminPassword": {
-			"type": "securestring",
-			"metadata": {
-				"description": "Password for the Virtual Machine."
-			}
-		}
-
-
-	},
-	"variables": {
-		"storageAccountName": "bastiontestdiag868",
-		"nicName": "[concat(parameters('Hostname'), '-NIC')]",
-		"addressPrefix": "10.0.0.0/16",
-		"subnetName": "default",
-		"subnetPrefix": "10.0.0.0/24",
-		"vmName": "[parameters('Hostname')]",
-		"virtualNetworkName": "Bastion_vNetwork",
-		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-		"networkSecurityGroupName": "[concat(parameters('Hostname'), '-NSG')]",
-		"vmSize": "Standard_D2_v2",
-		"location": "[resourceGroup().location]"
-	},
-	"resources": [{
-			"type": "Microsoft.Storage/storageAccounts",
-			"apiVersion": "2018-11-01",
-			"name": "[variables('storageAccountName')]",
-			"location": "[variables('location')]",
-			"sku": {
-				"name": "Standard_LRS"
-			},
-			"kind": "Storage",
-			"properties": {}
-		},
-
-		{
-			"type": "Microsoft.Network/virtualNetworks",
-			"apiVersion": "2019-09-01",
-			"name": "[variables('virtualNetworkName')]",
-			"location": "[variables('location')]",
-			"dependsOn": [
-				"[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-			],
-			"properties": {
-				"addressSpace": {
-					"addressPrefixes": [
-						"[variables('addressPrefix')]"
-					]
-				},
-				"subnets": [{
-					"name": "[variables('subnetName')]",
-					"properties": {
-						"addressPrefix": "[variables('subnetPrefix')]",
-						"networkSecurityGroup": {
-							"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-						}
-					}
-				}]
-			}
-		},
-		{
-			"type": "Microsoft.Network/networkInterfaces",
-			"apiVersion": "2018-11-01",
-			"name": "[variables('nicName')]",
-			"location": "[variables('location')]",
-			"dependsOn": [
-				"[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
-			]
-
-		},
-		{
-			"type": "Microsoft.Compute/virtualMachines",
-			"apiVersion": "2018-10-01",
-			"name": "[variables('vmName')]",
-			"location": "[variables('location')]",
-			"dependsOn": [
-				"[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-				"[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
-			],
-			"properties": {
-				"hardwareProfile": {
-					"vmSize": "[variables('vmSize')]"
-				},
-				"osProfile": {
-					"computerName": "[variables('vmName')]",
-					"adminUsername": "[parameters('adminUsername')]",
-					"adminPassword": "[parameters('adminPassword')]"
-				},
-				"storageProfile": {
-					"imageReference": {
-						"publisher": "MicrosoftWindowsDesktop",
-						"offer": "Windows-10",
-						"sku": "rs5-pro",
-						"version": "latest"
-					},
-
-					"dataDisks": [{
-						"diskSizeGB": 5,
-						"lun": 0,
-						"createOption": "Empty"
-					}]
-				},
-				"networkProfile": {
-					"networkInterfaces": [{
-						"id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
-					}]
-				}
-
-			}
-		}
-	],
-	"outputs": {}
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Hostname": {
+      "type": "string",
+      "defaultValue": "hostname",
+      "minLength": 5
+    },
+    "AdminUserName": {
+      "type": "string",
+      "defaultValue": "testadmin",
+      "minLength": 8
+    },
+    "AdminPassword": {
+      "type": "string",
+      "defaultValue": "P@55W0rd",
+      "minLength": 8
+    }
+  },
+  "variables": {
+    "vName": "[parameters('Hostname')]",
+    "vVNETname": "Test_vNetwork",
+    "vVNETPrefix": "10.1.0.0/16",
+    "vVNETSubnet1Name": "Subnet1",
+    "vVNETSubnet1Prefix": "10.1.0.0/24",
+    "vImagePublisher": "MicrosoftWindowsDesktop",
+    "vImageOffer": "Windows-10",
+    "vWindowsOSVersion": "rs5-pro",
+    "vOSDiskName": "[concat(variables('vName'), '-OSDISK')]",
+    "vVmSize": "Standard_D2s_v2",
+    "vVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vVNETname'))]",
+    "vSubnetRef": "[concat(variables('vVnetID'), '/subnets/', variables('vVNETSubnet1Name'))]",
+    "vNicName": "[concat(variables('vName'), '-NIC')]",
+    "vPUBIPName": "[concat(variables('vName'), '-PIP')]",
+    "vInstallHyperVScriptFolder": ".",
+    "vHyperVScriptFileName": "InstallSoftwareBasic.ps1",
+    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1"
+  },
+  "resources": [
+    {
+      "name": "[variables('vVNETname')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vVNETPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('vVNETSubnet1Name')]",
+            "properties": {
+              "addressPrefix": "[variables('vVNETSubnet1Prefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('vNicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2017-10-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vVNETname'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('vSubnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('vName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2017-12-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('vNicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('vVmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vName')]",
+          "adminUsername": "[parameters('vAdminUsername')]",
+          "adminPassword": "[parameters('vAdminPassword')]",
+          "windowsConfiguration": {
+            "enableAutomaticUpdates": true,
+            "provisionVmAgent": true
+          }
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('vImagePublisher')]",
+            "offer": "[variables('vImageOffer')]",
+            "sku": "[variables('vWindowsOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            }
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vNicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "name": "InstallApps",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2017-12-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('vName'))]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.4",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "fileUris": [
+                "[variables('vInstallHyperVURL')]"
+              ],
+              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('vInstallHyperVScriptFolder'), '/', variables('vHyperVScriptFileName'))]"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {}
 }
