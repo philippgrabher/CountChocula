@@ -96,8 +96,8 @@
         },
         "osProfile": {
           "computerName": "[variables('vName')]",
-          "adminUsername": "[parameters('vAdminUsername')]",
-          "adminPassword": "[parameters('vAdminPassword')]",
+          "adminUsername": "[parameters('AdminUsername')]",
+          "adminPassword": "[parameters('AdminPassword')]",
           "windowsConfiguration": {
             "enableAutomaticUpdates": true,
             "provisionVmAgent": true
