@@ -2,41 +2,42 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-	"Hostname": {
+    "Hostname": {
       "type": "string",
-      "defaultValue": "hostname",
+      "defaultValue": "client00",
       "minLength": 5
     },
-    "AdminUserName": {
+    "UserName": {
       "type": "string",
       "defaultValue": "testadmin",
       "minLength": 8
     },
-    "AdminPassword": {
+    "Password": {
       "type": "string",
-      "defaultValue": "P@55W0rd",
+      "defaultValue": "Password1234",
       "minLength": 8
     }
-
   },
   "variables": {
     "vName": "[parameters('Hostname')]",
-    "vVNETname": "Bastion_vNetwork",
+    "vVNETname": "Test_vNetwork",
     "vVNETPrefix": "10.1.0.0/16",
-    "vVNETSubnet1Name": "default",
-    "vVNETSubnet1Prefix": "10.1.0.0/24",
+    "vVNETSubnet1Name": "Subnet1",
+    "vVNETSubnet1Prefix": "10.1.1.0/24",
     "vImagePublisher": "MicrosoftWindowsDesktop",
     "vImageOffer": "Windows-10",
     "vWindowsOSVersion": "rs5-pro",
     "vOSDiskName": "[concat(variables('vName'), '-OSDISK')]",
-    "vVmSize": "Standard_D2s_v2",
+    "vVmSize": "Standard_D2s_v3",
     "vVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vVNETname'))]",
     "vSubnetRef": "[concat(variables('vVnetID'), '/subnets/', variables('vVNETSubnet1Name'))]",
     "vNicName": "[concat(variables('vName'), '-NIC')]",
     "vPUBIPName": "[concat(variables('vName'), '-PIP')]",
     "vInstallHyperVScriptFolder": ".",
     "vHyperVScriptFileName": "InstallSoftwareBasic.ps1",
-    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1"
+    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1",
+    "vBastionSubnetName": "AzureBastionSubnet",
+    "vBastionSubnetPrefix": "10.1.99.0/24"
   },
   "resources": [
     {
@@ -45,7 +46,6 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [],
-
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -58,11 +58,16 @@
             "properties": {
               "addressPrefix": "[variables('vVNETSubnet1Prefix')]"
             }
+          },
+          {
+            "name": "[variables('vBastionSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('vBastionSubnetPrefix')]"
+            }
           }
         ]
       }
     },
-
     {
       "name": "[variables('vNicName')]",
       "type": "Microsoft.Network/networkInterfaces",
@@ -70,9 +75,7 @@
       "apiVersion": "2017-10-01",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vVNETname'))]"
-
       ],
-
       "properties": {
         "ipConfigurations": [
           {
@@ -95,17 +98,14 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces', variables('vNicName'))]"
       ],
-      "tags": {
-        "displayName": "Test Tag2"
-      },
       "properties": {
         "hardwareProfile": {
           "vmSize": "[variables('vVmSize')]"
         },
         "osProfile": {
           "computerName": "[variables('vName')]",
-          "adminUsername": "[parameters('vAdminUsername')]",
-          "adminPassword": "[parameters('vAdminPassword')]",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]",
           "windowsConfiguration": {
             "enableAutomaticUpdates": true,
             "provisionVmAgent": true
@@ -141,10 +141,7 @@
           "apiVersion": "2017-12-01",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', variables('vName'))]"
-           ],
-          "tags": {
-            "displayName": "Install Applications"
-          },
+          ],
           "properties": {
             "publisher": "Microsoft.Compute",
             "type": "CustomScriptExtension",
