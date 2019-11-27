@@ -9,7 +9,7 @@
     },
     "UserName": {
       "type": "string",
-      "defaultValue": "adminusername",
+      "defaultValue": "testadmin",
       "minLength": 8
     },
     "Password": {
@@ -57,8 +57,11 @@
               "addressPrefix": "[variables('vVNETSubnet1Prefix')]"
             }
           },
-        {
-            "name": "['AzureBastionSubnet']"
+          {
+            "name": "['AzureBastionSubnet')]",
+            "properties": {
+              "addressPrefix": "['10.1.99.0/24']"
+            }
           }
         ]
       }
