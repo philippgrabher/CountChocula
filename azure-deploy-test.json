@@ -7,12 +7,12 @@
       "defaultValue": "hostname",
       "minLength": 5
     },
-    "AdminUserName": {
+    "UserName": {
       "type": "string",
       "defaultValue": "testadmin",
       "minLength": 8
     },
-    "AdminPassword": {
+    "Password": {
       "type": "string",
       "defaultValue": "P@55W0rd",
       "minLength": 8
@@ -96,8 +96,8 @@
         },
         "osProfile": {
           "computerName": "[variables('vName')]",
-          "adminUsername": "[parameters('AdminUsername')]",
-          "adminPassword": "[parameters('AdminPassword')]",
+          "adminUsername": "[parameters('Username')]",
+          "adminPassword": "[parameters('Password')]",
           "windowsConfiguration": {
             "enableAutomaticUpdates": true,
             "provisionVmAgent": true
