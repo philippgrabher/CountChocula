@@ -52,7 +52,7 @@
     
     "vBastionSubnetName": "AzureBastionSubnet",
 
-    "vBastionSubnetPrefix": "10.1.99.0/24"
+    "vBastionSubnetPrefix": "10.1.99.0/24",
 
     "vImagePublisher": "MicrosoftWindowsDesktop",
 
