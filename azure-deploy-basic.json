@@ -20,7 +20,7 @@
 
       "type": "string",
 
-      "defaultValue": "adminusername",
+      "defaultValue": "testadmin",
 
       "minLength": 8
 
@@ -42,17 +42,13 @@
 
     "vName": "[parameters('Hostname')]",
 
-    "vVNETname": "Bastion_vNetwork",
+    "vVNETname": "Test_vNetwork",
 
     "vVNETPrefix": "10.1.0.0/16",
 
     "vVNETSubnet1Name": "Subnet1",
 
     "vVNETSubnet1Prefix": "10.1.1.0/24",
-    
-    "vBastionSubnetName": "AzureBastionSubnet",
-
-    "vBastionSubnetPrefix": "10.1.99.0/24",
 
     "vImagePublisher": "MicrosoftWindowsDesktop",
 
@@ -76,7 +72,11 @@
 
     "vHyperVScriptFileName": "InstallSoftwareBasic.ps1",
 
-    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1"
+    "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1",
+
+    "vBastionSubnetName": "AzureBastionSubnet",
+
+    "vBastionSubnetPrefix": "10.1.99.0/24"
 
   },
 
