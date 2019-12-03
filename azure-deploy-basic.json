@@ -9,7 +9,7 @@
     },
     "UserName": {
       "type": "string",
-      "defaultValue": "testadmin",
+      "defaultValue": "adminuser",
       "minLength": 8
     },
     "Password": {
@@ -20,7 +20,7 @@
   },
   "variables": {
     "vName": "[parameters('Hostname')]",
-    "vVNETname": "Test_vNetwork",
+    "vVNETname": "Bastion_vNetwork",
     "vVNETPrefix": "10.1.0.0/16",
     "vVNETSubnet1Name": "Subnet1",
     "vVNETSubnet1Prefix": "10.1.1.0/24",
