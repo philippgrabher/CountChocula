@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "Hostname": {
-      "type": "string",
+      "type": "uniquestring",
       "defaultValue": "client00",
       "minLength": 5
     },
