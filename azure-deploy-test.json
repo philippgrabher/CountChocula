@@ -3,13 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "Hostname": {
-      "type": "string",
+      "type": "uniquestring",
       "defaultValue": "client00",
       "minLength": 5
     },
     "UserName": {
       "type": "string",
-      "defaultValue": "testadmin",
+      "defaultValue": "adminuser",
       "minLength": 8
     },
     "Password": {
@@ -20,7 +20,7 @@
   },
   "variables": {
     "vName": "[parameters('Hostname')]",
-    "vVNETname": "Test_vNetwork",
+    "vVNETname": "Bastion_vNetwork",
     "vVNETPrefix": "10.1.0.0/16",
     "vVNETSubnet1Name": "Subnet1",
     "vVNETSubnet1Prefix": "10.1.1.0/24",
@@ -158,5 +158,23 @@
       ]
     }
   ],
-  "outputs": {}
+  "outputs": {
+        "subscriptionOutput": {
+            "value": "[deployment()]",
+            "type" : "object"
+        },
+        "environmentOutput": {
+            "value": "[environment()]",
+            "type" : "object"
+        },
+    "stringOutput": {
+			"value": "[parameters('Hostname')]",
+			"type" : "string"
+		},
+    "exampleOutput1": {
+			"value": "[variables('vOSDiskName')]",
+			"type" : "string"
+		}
+    
+    }
 }
