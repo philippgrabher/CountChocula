@@ -1,9 +1,9 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "Hostname": {
-      "type": "uniquestring",
+      "type": "string",
       "defaultValue": "client00",
       "minLength": 5
     },
@@ -20,7 +20,7 @@
   },
   "variables": {
     "vName": "[parameters('Hostname')]",
-    "vVNETname": "Bastion_vNetwork",
+    "vVNETname": "Test_vNetwork",
     "vVNETPrefix": "10.1.0.0/16",
     "vVNETSubnet1Name": "Subnet1",
     "vVNETSubnet1Prefix": "10.1.1.0/24",
@@ -32,7 +32,6 @@
     "vVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vVNETname'))]",
     "vSubnetRef": "[concat(variables('vVnetID'), '/subnets/', variables('vVNETSubnet1Name'))]",
     "vNicName": "[concat(variables('vName'), '-NIC')]",
-    "vPUBIPName": "[concat(variables('vName'), '-PIP')]",
     "vInstallHyperVScriptFolder": ".",
     "vHyperVScriptFileName": "InstallSoftwareBasic.ps1",
     "vInstallHyperVURL": "https://raw.githubusercontent.com/philippgrabher/CountChocula/master/InstallSoftwareBasic.ps1",
@@ -44,7 +43,7 @@
       "name": "[variables('vVNETname')]",
       "type": "Microsoft.Network/virtualNetworks",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2016-03-30",
+      "apiVersion": "2016-06-01",
       "dependsOn": [],
       "properties": {
         "addressSpace": {
@@ -132,18 +131,18 @@
             }
           ]
         }
-      },
-      "resources": [
-        {
+      }
+    },
+    {
           "name": "InstallApps",
-          "type": "extensions",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
           "location": "[resourceGroup().location]",
           "apiVersion": "2017-12-01",
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', variables('vName'))]"
           ],
           "properties": {
-            "publisher": "Microsoft.Compute",
+            "publisher": "Microsoft.Compute/virtualMachines/extensions",
             "type": "CustomScriptExtension",
             "typeHandlerVersion": "1.4",
             "autoUpgradeMinorVersion": true,
@@ -155,9 +154,8 @@
             }
           }
         }
-      ]
-    }
-  ],
+      ],
+
   "outputs": {
         "subscriptionOutput": {
             "value": "[deployment()]",
