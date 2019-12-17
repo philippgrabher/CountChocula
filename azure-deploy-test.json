@@ -132,28 +132,7 @@
           ]
         }
       }
-    },
-    {
-          "name": "InstallApps",
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "location": "[resourceGroup().location]",
-          "apiVersion": "2017-12-01",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', variables('vName'))]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Compute/virtualMachines/extensions",
-            "type": "CustomScriptExtension",
-            "typeHandlerVersion": "1.4",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": [
-                "[variables('vInstallHyperVURL')]"
-              ],
-              "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('vInstallHyperVScriptFolder'), '/', variables('vHyperVScriptFileName'))]"
-            }
-          }
-        }
+    }
       ],
 
   "outputs": {
