@@ -6,6 +6,12 @@ This is just the Button for Testing
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+# Initial Setup
+After installing the First VM in a new vNet Bastion wont work because it wont have a public IP.
+The easiest way to create that public IP is to try to use Bastion and then follow the Wizard to enable Bastion for the first Host.
+This step will take about 5 minutes.
+
+
 # Provision preconfigured VMs
 A test template to provision various preconfigured VMs for various scenarios.
 
